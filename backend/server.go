@@ -41,11 +41,12 @@ func main() {
 	router.HandleFunc("/{username}/notecards/", getDeckListHandler).Methods("GET")
 	router.HandleFunc("/{username}/notecards/{deckId}/", getDeckHandler).Methods("GET")
 
+	router.HandleFunc("/login/", postLoginHandler).Methods("POST")
+	router.HandleFunc("/login/new/", postNewLoginHandler).Methods("POST")
+
 	fmt.Println("Running")
 	log.Fatal(http.ListenAndServe(":4221", router))
 
-	// i would like some login functionality eventually
-	// router.HandleFunc("/login/", postLoginHandler).Methods("POST")
 }
 
 func getDeckListHandler(w http.ResponseWriter, req *http.Request) {
@@ -83,5 +84,13 @@ func deleteDeckHandler(w http.ResponseWriter, req *http.Request) {
 }
 
 func deleteCardHandler(w http.ResponseWriter, req *http.Request) {
+
+}
+
+func postLoginHandler(w http.ResponseWriter, req *http.Request) {
+
+}
+
+func postNewLoginHandler(w http.ResponseWriter, req *http.Request) {
 
 }
