@@ -20,9 +20,10 @@ func (s *Server) getDeckHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 
 		vars := mux.Vars(req)
-		username := vars["Username"]
+		username := vars["username"]
 		deckId := vars["deckId"]
-		fmt.Println(username, deckId)
+		fmt.Println(username)
+		fmt.Println(deckId)
 	}
 }
 
@@ -45,18 +46,6 @@ func (s *Server) deleteDeckHandler() http.HandlerFunc {
 }
 
 func (s *Server) deleteCardHandler() http.HandlerFunc {
-	return func(w http.ResponseWriter, req *http.Request) {
-
-	}
-}
-
-func (s *Server) postLoginHandler() http.HandlerFunc {
-	return func(w http.ResponseWriter, req *http.Request) {
-
-	}
-}
-
-func (s *Server) postNewLoginHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 
 	}

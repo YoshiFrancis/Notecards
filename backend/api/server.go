@@ -15,6 +15,12 @@ type Notecard struct {
 	back   string `json:"front"`
 }
 
+type User struct {
+	User_id       int    `json:"user_id"`
+	Username      string `json:"username"`
+	Password_hash string `json:"password"`
+}
+
 type Server struct {
 	*mux.Router
 	dbpool *pgxpool.Pool
@@ -35,12 +41,16 @@ func NewServer() *Server {
 	return s
 }
 
+func (s *Server) Close() {
+	s.dbpool.Close()
+}
+
 func (s *Server) routes() {
 	s.HandleFunc("/create/", s.postDeckHandler()).Methods("POST")
 	s.HandleFunc("/create/{deckId}/", s.postCardHandler()).Methods("POST")
 	s.HandleFunc("/create/{deckId}/", s.deleteDeckHandler()).Methods("DELETE")
 	s.HandleFunc("/create/{deckId}/{cardId}/", s.deleteCardHandler()).Methods("DELETE")
-	s.HandleFunc("/{username}/notecards/", s.getDeckListHandler()).Methods("GET")
+	s.HandleFunc("/{username}/notecards", s.getDeckListHandler()).Methods("GET")
 	s.HandleFunc("/{username}/notecards/{deckId}/", s.getDeckHandler()).Methods("GET")
 
 	s.HandleFunc("/login/", s.postLoginHandler()).Methods("POST")
