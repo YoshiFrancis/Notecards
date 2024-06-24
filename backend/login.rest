@@ -28,3 +28,28 @@ Content-Type: "application/json"
   "user_id": 1,
   "title": "Yoshi's Deck"
 }
+
+####
+POST http://localhost:4221/create/1
+Content-Type: "application/json"
+
+[
+    {
+        "deck_id": 1,
+        "front": "Yoshi is King",
+        "back": "Yoshi is back King",
+        "user_id": 1
+    },
+    {
+        "deck_id": 1,
+        "front": "Yoshi is The King",
+        "back": "Yoshi is My King",
+        "user_id": 1
+    },
+    {
+        "deck_id": 1,
+        "front": "Yoshi is Your King",
+        "back": "Yoshi is Our King",
+        "user_id": 1
+    }
+]

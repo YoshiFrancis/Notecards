@@ -48,7 +48,7 @@ func (s *Server) Close() {
 
 func (s *Server) routes() {
 	s.HandleFunc("/create", s.postDeckHandler()).Methods("POST")
-	s.HandleFunc("/create/{deckId}/", s.postCardHandler()).Methods("POST")
+	s.HandleFunc("/create/{deckId}", s.postCardsHandler()).Methods("POST")
 	s.HandleFunc("/create/{deckId}/", s.deleteDeckHandler()).Methods("DELETE")
 	s.HandleFunc("/create/{deckId}/{cardId}/", s.deleteCardHandler()).Methods("DELETE")
 	s.HandleFunc("/{username}/notecards", s.getDeckListHandler()).Methods("GET")
