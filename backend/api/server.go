@@ -11,12 +11,6 @@ import (
 	"github.com/joho/godotenv"
 )
 
-type Notecard struct {
-	deckId int    `json:"id"`
-	front  string `json:"front"`
-	back   string `json:"front"`
-}
-
 type User struct {
 	User_id       int    `json:"user_id"`
 	Username      string `json:"username"`
@@ -53,7 +47,7 @@ func (s *Server) Close() {
 }
 
 func (s *Server) routes() {
-	s.HandleFunc("/create/", s.postDeckHandler()).Methods("POST")
+	s.HandleFunc("/create", s.postDeckHandler()).Methods("POST")
 	s.HandleFunc("/create/{deckId}/", s.postCardHandler()).Methods("POST")
 	s.HandleFunc("/create/{deckId}/", s.deleteDeckHandler()).Methods("DELETE")
 	s.HandleFunc("/create/{deckId}/{cardId}/", s.deleteCardHandler()).Methods("DELETE")

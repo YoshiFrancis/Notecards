@@ -14,6 +14,17 @@ POST http://localhost:4221/login
 Content-Type: "application/json"
 
 {
-  "username": "No1WayJose",
+  "username": "NoWayJose",
   "password": "123King"
+}
+
+####
+
+POST http://localhost:4221/create
+Content-Type: "application/json"
+
+{
+  "username": "NoWayJose",
+  "user_id": 1,
+  "title": "Yoshi's Deck"
 }
