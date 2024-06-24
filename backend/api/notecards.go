@@ -115,8 +115,16 @@ func (s *Server) postDeckHandler() http.HandlerFunc {
 			w.WriteHeader(http.StatusCreated)
 		}
 
-		fmt.Println("Inserted new thing into decks!")
-
+		var deck_id int
+		err = s.dbpool.QueryRow(context.Background(), "SELECT deck_id FROM decks WHERE title=$1 AND user_id=$2", deckReq.Title, deckReq.User_id).Scan(&deck_id)
+		if err != nil {
+			fmt.Println("Error querying for deck_id: post deck handler")
+			w.WriteHeader(http.StatusExpectationFailed)
+			return
+		}
+		deckReq.Deck_id = deck_id
+		deckJson, _ := json.Marshal(deckReq)
+		w.Write(deckJson)
 	}
 }
 
