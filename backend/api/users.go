@@ -13,19 +13,34 @@ func (s *Server) postLoginHandler() http.HandlerFunc {
 		var user User
 
 		if err := decoder.Decode(&user); err != nil {
+			fmt.Println("Error decoding request")
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
-		var password string
-		err := s.dbpool.QueryRow(context.Background(), "select password from users where username='$1'", user.Password_hash).Scan(&password)
+
+		var exists bool
+		err := s.dbpool.QueryRow(context.Background(), "select exists ( select username from users where username=$1 )", user.Username).Scan(&exists)
 		if err != nil {
+			fmt.Println("Error querying database:", err)
+			return
+		}
+
+		if !exists {
+			w.Write([]byte("Username or password incorrect"))
+			return
+		}
+
+		var password string
+		err = s.dbpool.QueryRow(context.Background(), "select passwords from users where username=$1", user.Username).Scan(&password)
+		if err != nil {
+			fmt.Println("error getting password")
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
-		if password != "" {
-			w.WriteHeader(http.StatusFound)
+		if password == user.Password_hash {
+			w.Write([]byte("Logged in!"))
 		} else {
-			w.WriteHeader(http.StatusNotFound)
+			w.Write([]byte("Username or password is incorrect!"))
 		}
 	}
 }
@@ -49,7 +64,7 @@ func (s *Server) postNewLoginHandler() http.HandlerFunc {
 
 		if exists {
 			fmt.Println("username already exists")
-			http.Error(w, err.Error(), http.StatusBadRequest)
+			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
 
