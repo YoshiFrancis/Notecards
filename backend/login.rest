@@ -1,0 +1,9 @@
+####
+
+POST http://localhost:4221/login/new/
+Content-Type: "application/json"
+
+{
+  "username": "NoWayJose",
+  "password": "123King"
+}

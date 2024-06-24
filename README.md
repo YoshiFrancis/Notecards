@@ -19,6 +19,7 @@ SERIAL  | varchar(20) |     TEXT      |   TIMESTAMP
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
+    passwords VARCHAR(50) NOT NULL UNIQUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

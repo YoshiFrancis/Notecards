@@ -3,10 +3,12 @@ package api
 import (
 	"context"
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/joho/godotenv"
 )
 
 type Notecard struct {
@@ -27,6 +29,11 @@ type Server struct {
 }
 
 func NewServer() *Server {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalf("Error loading .env file: %v\n", err)
+		os.Exit(1)
+	}
 	dbpool_, err := pgxpool.New(context.Background(), os.Getenv("DATABASE_URL"))
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to create connection pool: %v\n", err)
@@ -53,6 +60,6 @@ func (s *Server) routes() {
 	s.HandleFunc("/{username}/notecards", s.getDeckListHandler()).Methods("GET")
 	s.HandleFunc("/{username}/notecards/{deckId}/", s.getDeckHandler()).Methods("GET")
 
-	s.HandleFunc("/login/", s.postLoginHandler()).Methods("POST")
+	s.HandleFunc("/login", s.postLoginHandler()).Methods("POST")
 	s.HandleFunc("/login/new/", s.postNewLoginHandler()).Methods("POST")
 }

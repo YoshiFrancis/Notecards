@@ -13,6 +13,7 @@ func main() {
 
 	s := api.NewServer()
 	defer s.Close()
+
 	log.Fatal(http.ListenAndServe(":4221", s))
 
 }

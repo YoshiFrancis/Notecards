@@ -3,6 +3,7 @@ package api
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -16,7 +17,7 @@ func (s *Server) postLoginHandler() http.HandlerFunc {
 			return
 		}
 		var password string
-		err := s.dbpool.QueryRow(context.Background(), "select password from users where username=$1", user.Password_hash).Scan(&password)
+		err := s.dbpool.QueryRow(context.Background(), "select password from users where username='$1'", user.Password_hash).Scan(&password)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
@@ -38,24 +39,28 @@ func (s *Server) postNewLoginHandler() http.HandlerFunc {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
-		var username string
-		err := s.dbpool.QueryRow(context.Background(), "select username from users where username=$1", user.Username).Scan(&username)
+		fmt.Println(user.Username, user.Password_hash)
+		var exists bool
+		err := s.dbpool.QueryRow(context.Background(), "select exists ( select username from users where username=$1 )", user.Username).Scan(&exists)
 		if err != nil {
+			fmt.Println("Error querying database:", err)
+			return
+		}
+
+		if exists {
+			fmt.Println("username already exists")
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 
-		if username != "" {
-			w.WriteHeader(http.StatusBadRequest)
-		}
-
-		err = s.dbpool.QueryRow(context.Background(), `insert into users ( ('$1', '$2') )`, user.Username, user.Password_hash).Scan(&username)
+		_, err = s.dbpool.Exec(context.Background(), `insert into users (username, passwords) VALUES ($1, $2)`, user.Username, user.Password_hash)
 
 		if err != nil {
+			fmt.Println("error inserting into table")
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 
-		w.WriteHeader(http.StatusCreated)
+		w.Write([]byte(user.Username))
 	}
 }
