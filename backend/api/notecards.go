@@ -21,6 +21,7 @@ type Notecard struct {
 	Front  string `json:"front"`
 	Back   string `json:"back"`
 	UserId int    `json:"user_id"`
+	CardId int    `json:"card_id,omitempty"`
 }
 
 func (s *Server) getDeckListHandler() http.HandlerFunc {
@@ -58,9 +59,23 @@ func (s *Server) getDeckHandler() http.HandlerFunc {
 
 		vars := mux.Vars(req)
 		deckId := vars["deckId"]
-		query := "SELECT cards.card_id, cards.front, cards.back FROM decks JOIN cards ON decks.deck_id=cards.deck_id WHERE decks.deck_id=$1"
-		_, cards := s.dbpool.Query(context.Background(), query, deckId)
-		fmt.Println(cards)
+		query := "SELECT cards.card_id, cards.front, cards.back, cards.user_id, cards.deck_id FROM decks JOIN cards ON decks.deck_id=cards.deck_id WHERE decks.deck_id=$1"
+		rows, err := s.dbpool.Query(context.Background(), query, deckId)
+		if err != nil {
+			fmt.Println("Error querying rows for cards in deck handler")
+			w.WriteHeader(http.StatusBadRequest)
+		}
+
+		var card_id, user_id, deck_id int
+		var front, back string
+		cards := make([]Notecard, 0)
+		pgx.ForEachRow(rows, []any{&card_id, &front, &back, &user_id, &deck_id}, func() error {
+			cards = append(cards, Notecard{deck_id, front, back, user_id, card_id})
+			return nil
+		})
+
+		cardsJson, _ := json.Marshal(cards)
+		w.Write(cardsJson)
 	}
 }
 
@@ -117,6 +132,7 @@ func (s *Server) postCardsHandler() http.HandlerFunc {
 		}
 
 		for _, notecard := range notecards {
+			fmt.Println(notecard.DeckId, notecard.UserId, notecard.Front, notecard.Back)
 			_, err := s.dbpool.Exec(context.Background(), "INSERT INTO cards (deck_id, user_id, front, back) VALUES ($1, $2, $3, $4)", notecard.DeckId, notecard.UserId, notecard.Front, notecard.Back)
 			if err != nil {
 				fmt.Println("Error inserting into table")

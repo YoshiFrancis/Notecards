@@ -4,8 +4,8 @@ POST http://localhost:4221/login/new/
 Content-Type: "application/json"
 
 {
-  "username": "NoWayJose",
-  "password": "123King"
+  "username": "YoshiKnows",
+  "password": "123Ki1ng"
 }
 
 ####
@@ -14,8 +14,8 @@ POST http://localhost:4221/login
 Content-Type: "application/json"
 
 {
-  "username": "NoWayJose",
-  "password": "123King"
+  "username": "YoshiKnows",
+  "password": "123Ki1ng"
 }
 
 ####
@@ -24,36 +24,57 @@ POST http://localhost:4221/create
 Content-Type: "application/json"
 
 {
-  "username": "NoWayJose",
-  "user_id": 1,
-  "title": "Yoshi's Deck"
+  "username": "YoshiKnows",
+  "user_id": 4,
+  "title": "New town my town!"
 }
 
 ####
-POST http://localhost:4221/create/1
+POST http://localhost:4221/create/4
 Content-Type: "application/json"
 
 [
     {
-        "deck_id": 1,
+        "deck_id": 2,
         "front": "Yoshi is King",
         "back": "Yoshi is back King",
-        "user_id": 1
+        "user_id": 4,
+        "card_id": -1
     },
     {
-        "deck_id": 1,
+        "deck_id": 2,
         "front": "Yoshi is The King",
         "back": "Yoshi is My King",
-        "user_id": 1
+        "user_id": 4,
+        "card_id": -1
+
     },
     {
-        "deck_id": 1,
-        "front": "Yoshi is Your King",
+        "deck_id": 2,
+        "front": "Yoshi our King",
         "back": "Yoshi is Our King",
-        "user_id": 1
+        "user_id": 4,
+        "card_id": -1
+    },
+    {
+        "deck_id": 2,
+        "front": "Yoshi is You",
+        "back": "Yoshi Our King",
+        "user_id": 4,
+        "card_id": -1
+    },
+    {
+        "deck_id": 2,
+        "front": "Yoshi is ",
+        "back": "Yoshi is ur King",
+        "user_id": 4,
+        "card_id": -1
     }
 ]
 
 ####
 
-GET http://localhost:4221/yoshi/notecards
+GET http://localhost:4221/YoshiKnows/notecards
+
+####
+GET http://localhost:4221/YoshiKnows/notecards/2
