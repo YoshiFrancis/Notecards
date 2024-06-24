@@ -53,3 +53,7 @@ Content-Type: "application/json"
         "user_id": 1
     }
 ]
+
+####
+
+GET http://localhost:4221/yoshi/notecards

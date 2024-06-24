@@ -7,10 +7,12 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/jackc/pgx/v5"
 )
 
 type Deck struct {
 	User_id int    `json:"user_id"`
+	Deck_id int    `json:"deck_id,omitempty"`
 	Title   string `json:"title"`
 }
 
@@ -26,6 +28,27 @@ func (s *Server) getDeckListHandler() http.HandlerFunc {
 		vars := mux.Vars(req)
 		username := vars["username"]
 		fmt.Println(username)
+		query := "SELECT users.user_id, decks.deck_id, decks.title FROM users JOIN decks ON users.user_id=decks.user_id WHERE users.username=$1"
+		rows, err := s.dbpool.Query(context.Background(), query, username)
+		if err != nil {
+			fmt.Println("Error getting deck list query")
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+
+		var deck_id int
+		var deck_title string
+		var user_id int
+
+		decks := make([]Deck, 0)
+		pgx.ForEachRow(rows, []any{&user_id, &deck_id, &deck_title}, func() error {
+			fmt.Println(deck_id, deck_title, user_id)
+			decks = append(decks, Deck{user_id, deck_id, deck_title})
+			return nil
+		})
+
+		decksJson, _ := json.Marshal(decks)
+		w.Write(decksJson)
 	}
 
 }
@@ -34,17 +57,20 @@ func (s *Server) getDeckHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 
 		vars := mux.Vars(req)
-		username := vars["username"]
 		deckId := vars["deckId"]
-		fmt.Println(username)
-		fmt.Println(deckId)
+		query := "SELECT cards.card_id, cards.front, cards.back FROM decks JOIN cards ON decks.deck_id=cards.deck_id WHERE decks.deck_id=$1"
+		_, cards := s.dbpool.Query(context.Background(), query, deckId)
+		fmt.Println(cards)
 	}
 }
 
+// //
+// // TODO: authentication
+// //
 func (s *Server) postDeckHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		decoder := json.NewDecoder(req.Body)
-		// TODO: authentication
+
 		var deckReq Deck
 		if err := decoder.Decode(&deckReq); err != nil {
 			fmt.Println("Error json decoding: post deck handler")
@@ -64,6 +90,7 @@ func (s *Server) postDeckHandler() http.HandlerFunc {
 			w.Write([]byte("Deck title already exists"))
 			return
 		}
+
 		// Inserting new deck into decks
 		_, err = s.dbpool.Exec(context.Background(), "INSERT INTO decks (title, user_id) VALUES ($1, $2)", deckReq.Title, deckReq.User_id)
 		if err != nil {
@@ -78,6 +105,7 @@ func (s *Server) postDeckHandler() http.HandlerFunc {
 	}
 }
 
+// / TODO: authentication
 func (s *Server) postCardsHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		decoder := json.NewDecoder(req.Body)
