@@ -51,8 +51,9 @@ func (s *Server) routes() {
 	s.HandleFunc("/create/{deckId}", s.postCardsHandler()).Methods("POST")
 	s.HandleFunc("/create/{deckId}/", s.deleteDeckHandler()).Methods("DELETE")
 	s.HandleFunc("/create/{deckId}/{cardId}/", s.deleteCardHandler()).Methods("DELETE")
-	s.HandleFunc("/{username}/notecards", s.getDeckListHandler()).Methods("GET")
-	s.HandleFunc("/{username}/notecards/{deckId}", s.getDeckHandler()).Methods("GET")
+	s.HandleFunc("/notecards", s.getDeckListHandler()).Methods("GET")
+	s.HandleFunc("/notecards/{username}", s.getUserDeckListHandler()).Methods("GET")
+	s.HandleFunc("/notecards/{username}/{deckId}", s.getDeckHandler()).Methods("GET")
 
 	s.HandleFunc("/login", s.postLoginHandler()).Methods("POST")
 	s.HandleFunc("/login/new/", s.postNewLoginHandler()).Methods("POST")

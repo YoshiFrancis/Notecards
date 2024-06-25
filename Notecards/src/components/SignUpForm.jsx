@@ -1,18 +1,22 @@
 import { useState } from "react"
 import { newLogin } from "../utils/user";
+import { useNavigate } from "react-router-dom";
 
 const SignUpForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [alert, setAlert] = useState(false);
+  const alertMsg = "Username already exists";
+  const navigate = useNavigate();
 
   const attemptSignUp = async () => {
     const isSignedUp = await newLogin(username, password);
     if (isSignedUp) {
       console.log("success!")
-      // redirect to home page again
+      navigate('/');  // redirection to home page
     } else {
       console.log("username already exists")
-      // clear form and alert user such
+      setAlert(true);     // enables alert message for user
     }
   }
 
@@ -24,6 +28,7 @@ const SignUpForm = () => {
 
   return (
     <form onSubmit={handleSumbit}>
+      {alert && <h1>{alertMsg}</h1>}
       <label>
         username:
         <br />

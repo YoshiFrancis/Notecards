@@ -19,15 +19,15 @@ export const newLogin = async (username_, password_) => {
   }
 }
 
-const login = async ({ username, password }) => {
+export const login = async ({ username_, password_ }) => {
   const response = await fetch(url + "login", {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: {
-      "username": username,
-      "passwrod": password
+      username: username_,
+      passwrod: password_
     }
   })
   if (response.status == 200) {

@@ -26,6 +26,33 @@ type Notecard struct {
 
 func (s *Server) getDeckListHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
+		query := "SELECT users.user_id, decks.deck_id, decks.title FROM users JOIN decks ON users.user_id=decks.user_id"
+		rows, err := s.dbpool.Query(context.Background(), query)
+		if err != nil {
+			fmt.Println("Error getting deck list query")
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+
+		var deck_id int
+		var deck_title string
+		var user_id int
+
+		decks := make([]Deck, 0)
+		pgx.ForEachRow(rows, []any{&user_id, &deck_id, &deck_title}, func() error {
+			fmt.Println(deck_id, deck_title, user_id)
+			decks = append(decks, Deck{user_id, deck_id, deck_title})
+			return nil
+		})
+
+		decksJson, _ := json.Marshal(decks)
+		w.Write(decksJson)
+	}
+
+}
+
+func (s *Server) getUserDeckListHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
 		vars := mux.Vars(req)
 		username := vars["username"]
 		fmt.Println(username)
