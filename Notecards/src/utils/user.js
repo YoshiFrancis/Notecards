@@ -19,22 +19,27 @@ export const newLogin = async (username_, password_) => {
   }
 }
 
-export const login = async ({ username_, password_ }) => {
+export const login = async (username_, password_) => {
   const response = await fetch(url + "login", {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: {
+    body: JSON.stringify({
       username: username_,
-      passwrod: password_
-    }
+      password: password_
+    })
   })
   if (response.status == 200) {
+    let username = await response.json();
+    document.cookie = "username=" + username;
     return true;
   } else {
     return false;
   }
 }
 
-export default { newLogin, login }
+export const getUsername = () => {
+  let decodedCookie = decodeURIComponent(document.cookie);
+  return decodedCookie.substring("username=".length)
+}

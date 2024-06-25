@@ -18,7 +18,7 @@ func (s *Server) postLoginHandler() http.HandlerFunc {
 			return
 		}
 
-		fmt.Println(user)
+		fmt.Println(user.Username)
 
 		var exists bool
 		err := s.dbpool.QueryRow(context.Background(), "select exists ( select username from users where username=$1 )", user.Username).Scan(&exists)
@@ -28,6 +28,7 @@ func (s *Server) postLoginHandler() http.HandlerFunc {
 		}
 
 		if !exists {
+			w.WriteHeader(http.StatusNotAcceptable)
 			w.Write([]byte("Username or password incorrect"))
 			return
 		}
@@ -40,9 +41,10 @@ func (s *Server) postLoginHandler() http.HandlerFunc {
 			return
 		}
 		if password == user.Password_hash {
-			w.Write([]byte("Logged in!"))
+			usernameJson, _ := json.Marshal(user.Username)
+			w.Write(usernameJson)
 		} else {
-			w.Write([]byte("Username or password is incorrect!"))
+			w.WriteHeader(http.StatusNotAcceptable)
 		}
 	}
 }
@@ -80,6 +82,5 @@ func (s *Server) postNewLoginHandler() http.HandlerFunc {
 		}
 		fmt.Println("new user inserted!")
 		w.WriteHeader(http.StatusCreated)
-		w.Write([]byte(user.Username))
 	}
 }
