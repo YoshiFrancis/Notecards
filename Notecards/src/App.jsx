@@ -7,6 +7,7 @@ import LoginForm from './components/LoginForm';
 import NotecardList from './components/NotecardList';
 import DeckForm from './components/DeckForm';
 import NotecardForm from './components/NotecardForm';
+import SignUpForm from './components/SignUpForm';
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/notecards" element={<NotecardList />} />
         <Route path="/login" element={<LoginForm />} />
+        <Route path="login/new" element={<SignUpForm />} />
         <Route path="/create" element={<DeckForm />} />
         <Route path="/create/:deckName" element={<NotecardForm />} />
       </Routes>

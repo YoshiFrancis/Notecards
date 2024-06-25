@@ -4,8 +4,8 @@ POST http://localhost:4221/login/new/
 Content-Type: "application/json"
 
 {
-  "username": "YoshiKnows",
-  "password": "123Ki1ng"
+  "username": "YoshiKnwwows",
+  "password": "123K1i1ng"
 }
 
 ####

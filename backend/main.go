@@ -6,6 +6,7 @@ import (
 
 	// "encoding/json"
 
+	"github.com/rs/cors"
 	"github.com/yoshifrancis/not-the-cards/api"
 )
 
@@ -14,6 +15,8 @@ func main() {
 	s := api.NewServer()
 	defer s.Close()
 
-	log.Fatal(http.ListenAndServe(":4221", s))
+	handler := cors.Default().Handler(s)
+
+	log.Fatal(http.ListenAndServe(":4221", handler))
 
 }

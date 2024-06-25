@@ -18,6 +18,8 @@ func (s *Server) postLoginHandler() http.HandlerFunc {
 			return
 		}
 
+		fmt.Println(user)
+
 		var exists bool
 		err := s.dbpool.QueryRow(context.Background(), "select exists ( select username from users where username=$1 )", user.Username).Scan(&exists)
 		if err != nil {
@@ -52,6 +54,7 @@ func (s *Server) postNewLoginHandler() http.HandlerFunc {
 
 		if err := decoder.Decode(&user); err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
+			fmt.Println("error decoding request json : post new login handler")
 			return
 		}
 		fmt.Println(user.Username, user.Password_hash)
@@ -75,7 +78,8 @@ func (s *Server) postNewLoginHandler() http.HandlerFunc {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
-
+		fmt.Println("new user inserted!")
+		w.WriteHeader(http.StatusCreated)
 		w.Write([]byte(user.Username))
 	}
 }

@@ -19,7 +19,7 @@ SERIAL  | varchar(20) |     TEXT      |   TIMESTAMP
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
-    passwords VARCHAR(50) NOT NULL UNIQUE,
+    passwords VARCHAR(50) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -28,6 +28,7 @@ CREATE TABLE decks (
   title VARCHAR(50) NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   user_id INTEGER NOT NULL,
+  UNIQUE(user_id, title)
   CONSTRAINT fk_user_table
         FOREIGN KEY (user_id)
         REFERENCES users (user_id)
@@ -40,6 +41,7 @@ CREATE TABLE cards (
   user_id INTEGER NOT NULL,
   front TEXT NOT NULL,
   back TEXT NOT NULL,
+  UNIQUE(front, back),
   CONSTRAINT fk_deck_table
         FOREIGN KEY (deck_id)
         REFERENCES decks (deck_id)
