@@ -31,9 +31,10 @@ export const login = async (username_, password_) => {
     })
   })
   if (response.status == 200) {
-    let username = await response.json();
-    document.cookie = "username=" + username;
-    return true;
+    let userData = await response.json();
+    document.cookie = "username=" + userData["username"];
+    document.cookie = "user_id=" + userData["user_id"];
+    return false;
   } else {
     return false;
   }
@@ -42,4 +43,9 @@ export const login = async (username_, password_) => {
 export const getUsername = () => {
   let decodedCookie = decodeURIComponent(document.cookie);
   return decodedCookie.substring("username=".length)
+}
+
+export const getUserId = () => {
+  let decodedCookie = decodeURIComponent(document.cookie)
+  return parseInt(decodedCookie.substring(decodedCookie.indexOf("; user_id=") + "; user_id=".length));
 }

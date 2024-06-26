@@ -1,12 +1,18 @@
 const url = 'http://localhost:4221/'
 
-export const getAllDecks = async () => {
-  const response = await fetch(url + "notecards")
+
+export const createCards = async (cards, deckId) => {
+  const response = await fetch(url + "/create/" + deckId, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(cards)
+  })
+
   if (response.status == 200) {
-    let decks = response.json();
-    return decks;
+    return true;
   } else {
-    console.error("error fetching decks")
-    return []
+    return false;
   }
 }
