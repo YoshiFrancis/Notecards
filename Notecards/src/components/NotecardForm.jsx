@@ -7,10 +7,10 @@ import { getUserId } from '../utils/user';
 const NotecardForm = () => {
   const { deckName } = useParams();
   const [searchParams] = useSearchParams();
-  let deckId = "";
+  let deckId = -1;
 
   useEffect(() => {
-    deckId = searchParams.get('deckId')
+    deckId = parseInt(searchParams.get('deckId'));
     console.log(deckId)
   }, [])
   // State to store form data
@@ -40,7 +40,7 @@ const NotecardForm = () => {
       back: formData.back,
       user_id: getUserId(),
       card_id: -1
-    }], deckId)
+    }], deckName)
 
     if (!isSuccess) {
       console.log("network error")

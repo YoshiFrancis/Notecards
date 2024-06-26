@@ -26,17 +26,17 @@ Content-Type: "application/json"
 {
   "username": "YoshiKnows",
   "user_id": 4,
-  "title": "New town 33my13313 ihih!"
+  "title": "Newtown33my13313ihih!"
 }
 
 ####
-POST http://localhost:4221/create/4
+POST http://localhost:4221/create/Newtown33my13313ihih
 Content-Type: "application/json"
 
 [
     {
-        "deck_id": 2,
-        "front": "Yoshi is King",
+        "deck_id": 10,
+        "front": "YWOWOOWOWOWOWO",
         "back": "Yoshi is back King",
         "user_id": 4,
         "card_id": -1

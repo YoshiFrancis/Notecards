@@ -166,6 +166,7 @@ func (s *Server) postCardsHandler() http.HandlerFunc {
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
+		fmt.Println("helllo")
 
 		for _, notecard := range notecards {
 			fmt.Println(notecard.DeckId, notecard.UserId, notecard.Front, notecard.Back)

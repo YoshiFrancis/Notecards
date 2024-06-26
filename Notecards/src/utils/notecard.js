@@ -1,8 +1,9 @@
 const url = 'http://localhost:4221/'
 
 
-export const createCards = async (cards, deckId) => {
-  const response = await fetch(url + "/create/" + deckId, {
+export const createCards = async (cards, deckName) => {
+  console.log(cards)
+  const response = await fetch(url + "create/" + deckName, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -10,7 +11,7 @@ export const createCards = async (cards, deckId) => {
     body: JSON.stringify(cards)
   })
 
-  if (response.status == 200) {
+  if (response.status == 201) {
     return true;
   } else {
     return false;
