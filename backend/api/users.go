@@ -34,15 +34,18 @@ func (s *Server) postLoginHandler() http.HandlerFunc {
 		}
 
 		var password string
-		err = s.dbpool.QueryRow(context.Background(), "select passwords from users where username=$1", user.Username).Scan(&password)
+		var user_id int
+		err = s.dbpool.QueryRow(context.Background(), "select passwords, user_id from users where username=$1", user.Username).Scan(&password, &user_id)
 		if err != nil {
 			fmt.Println("error getting password")
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 		if password == user.Password_hash {
-			usernameJson, _ := json.Marshal(user.Username)
-			w.Write(usernameJson)
+			user.User_id = user_id
+			user.Password_hash = ""
+			userJson, _ := json.Marshal(user)
+			w.Write(userJson)
 		} else {
 			w.WriteHeader(http.StatusNotAcceptable)
 		}
