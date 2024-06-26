@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import "../styles/DeckForm.css"
 import { Navigate, redirect, useNavigate } from 'react-router-dom';
+import { createDeck } from "../utils/deck.js"
 
 const DeckForm = () => {
   // State to store form data
@@ -20,12 +21,14 @@ const DeckForm = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Process form data here (e.g., send to a server)
-    console.log('Form submitted:', formData);
-    console.log("navigated to /");
-    navigate(`/create/${formData.name}`)
+    const response = await createDeck(formData.name)
+    if (response[0]) 
+      navigate(`/create/${formData.name}?deckId=${response[1]}`)
+    else 
+      console.error("network errors!")
 
   };
 

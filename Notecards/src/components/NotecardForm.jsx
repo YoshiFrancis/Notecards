@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "../styles/NotecardForm.css"
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
+import { createCards } from '../utils/notecard';
+import { getUserId } from '../utils/user';
 
 const NotecardForm = () => {
   const { deckName } = useParams();
+  const [searchParams] = useSearchParams();
+  let deckId = "";
+
+  useEffect(() => {
+    deckId = searchParams.get('deckId')
+    console.log(deckId)
+  }, [])
   // State to store form data
   const [formData, setFormData] = useState({
     front: '',
@@ -20,10 +29,24 @@ const NotecardForm = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Process form data here (e.g., send to a server)
     console.log('Form submitted:', formData);
+
+    const isSuccess = await createCards([{
+      deck_id: deckId,
+      front: formData.front,
+      back: formData.back,
+      user_id: getUserId(),
+      card_id: -1
+    }], deckId)
+
+    if (!isSuccess) {
+      console.log("network error")
+      return
+    }
+
     setFormData({
       front: '',
       back: '',

@@ -14,8 +14,8 @@ POST http://localhost:4221/login
 Content-Type: "application/json"
 
 {
-  "username": "YoshiKnows",
-  "password": "123Ki1ng"
+  "username": "yoshi",
+  "password": "king"
 }
 
 ####
@@ -26,7 +26,7 @@ Content-Type: "application/json"
 {
   "username": "YoshiKnows",
   "user_id": 4,
-  "title": "New town my town!"
+  "title": "New town 33my13313 ihih!"
 }
 
 ####

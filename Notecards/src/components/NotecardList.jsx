@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { getAllDecks } from "../utils/notecard"
+import { getAllDecks } from "../utils/deck"
 
 const NotecardList = () => {
   const [decks, setDecks] = useState([])

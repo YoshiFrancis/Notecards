@@ -18,7 +18,7 @@ func (s *Server) postLoginHandler() http.HandlerFunc {
 			return
 		}
 
-		fmt.Println(user.Username)
+		fmt.Println(user.Username, user.Password_hash)
 
 		var exists bool
 		err := s.dbpool.QueryRow(context.Background(), "select exists ( select username from users where username=$1 )", user.Username).Scan(&exists)

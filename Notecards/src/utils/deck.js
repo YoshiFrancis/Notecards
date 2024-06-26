@@ -40,6 +40,7 @@ export const getUserDeck = async (username, deckId) => {
 }
 
 export const createDeck = async (title) => {
+  console.log
   const response = await fetch(url + "create", {
     method: 'POST',
     headers: {
@@ -52,9 +53,10 @@ export const createDeck = async (title) => {
     })
   })
 
-  if (response == 200) {
-    return true;
+  if (response.status == 201) {
+    let data = await response.json();
+    return [true, data["deck_id"]];
   } else {
-    return false;
+    return [false, {}];
   }
 }

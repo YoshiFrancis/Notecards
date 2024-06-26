@@ -151,6 +151,7 @@ func (s *Server) postDeckHandler() http.HandlerFunc {
 		}
 		deckReq.Deck_id = deck_id
 		deckJson, _ := json.Marshal(deckReq)
+		w.WriteHeader(http.StatusCreated)
 		w.Write(deckJson)
 	}
 }

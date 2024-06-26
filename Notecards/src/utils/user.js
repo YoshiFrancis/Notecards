@@ -34,7 +34,7 @@ export const login = async (username_, password_) => {
     let userData = await response.json();
     document.cookie = "username=" + userData["username"];
     document.cookie = "user_id=" + userData["user_id"];
-    return false;
+    return true;
   } else {
     return false;
   }
