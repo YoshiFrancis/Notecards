@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react"
 import { getAllDecks, getAllUserDecks } from "../utils/deck"
 import { Link } from "react-router-dom"
+import '../styles/DeckList.css'
+import DeckDescription from "./DeckDescription"
 
 const DeckList = ({ username }) => {
   const [decks, setDecks] = useState([])
@@ -20,9 +22,13 @@ const DeckList = ({ username }) => {
     console.log(decks)
   }, [decks])
   return (
-    <ul>
+    <ul className="decklist">
       {decks.map((deck) => (
-        <li key={deck["deck_id"]}><Link to={"/notecards/" + deck["username"] + "/" + deck["title"]}>{deck["title"]}</Link></li>
+        <li key={deck["deck_id"]}>
+          <Link to={"/notecards/" + deck["username"] + "/" + deck["title"]}>
+            <DeckDescription username={deck["username"]} title={deck["title"]} className="deck-desc-holder"/>
+          </Link>
+        </li>
       ))}
 
     </ul>

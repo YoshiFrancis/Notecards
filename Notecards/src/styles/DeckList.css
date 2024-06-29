@@ -1,0 +1,23 @@
+/* src/Navbar.css */
+.decklist {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: #333;
+  padding: .5rem 1rem;
+  list-style: none;
+}
+
+.deck-desc-holder {
+  width: 20vw;
+  color: orange;
+  border: white 2px solid;
+  margin-top: 2.5vh;
+  margin-bottom: 2.5vh;
+}
+
+.deck-desc-holder:hover {
+  background-color: white;
+}
