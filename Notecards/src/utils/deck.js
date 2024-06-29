@@ -27,8 +27,8 @@ export const getAllUserDecks = async (username) => {
 export const getUserDeck = async (username, deckId) => {
   const response = await fetch(url + "notecards/" + username + "/" + deckId);
   if (response.status == 200) {
-    let deck = await response.json();
-    return deck;
+    let data = await response.json();
+    return data;
   } else {
     console.error("error fetching deck from", username, "with id", deckId);
     return {
