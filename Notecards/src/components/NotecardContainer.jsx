@@ -1,6 +1,7 @@
 
 
 const NotecardContainer = ({ notecards }) => {
+  console.log("in notecard container");
   return (
     <div className="notecard-container">
       {notecards.map((notecard) => (

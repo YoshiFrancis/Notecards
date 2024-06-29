@@ -24,13 +24,14 @@ export const getAllUserDecks = async (username) => {
   }
 }
 
-export const getUserDeck = async (username, deckId) => {
-  const response = await fetch(url + "notecards/" + username + "/" + deckId);
+export const getUserDeck = async (username, deckTitle) => {
+  const response = await fetch(url + "notecards/" + username + "/" + deckTitle);
   if (response.status == 200) {
     let data = await response.json();
+    console.log("data from getting user deck cards: ", data)
     return data;
   } else {
-    console.error("error fetching deck from", username, "with id", deckId);
+    console.error("error fetching deck from", username, "with id", deckTitle);
     return {
       username: "",
       user_id: -1,

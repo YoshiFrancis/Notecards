@@ -77,4 +77,4 @@ Content-Type: "application/json"
 GET http://localhost:4221/YoshiKnows/notecards
 
 ####
-GET http://localhost:4221/YoshiKnows/notecards/2
+GET http://localhost:4221/notecards/YoshiKnows/2

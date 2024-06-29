@@ -21,7 +21,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/notecards" element={<DeckList username={""}/>} />
         <Route path="/notecards/:username" element={<DeckListWrapper />} />
-        <Route path="/notecards/:username/:deckId" element={<DeckPage />} />
+        <Route path="/notecards/:username/:deckTitle" element={<DeckPage />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="login/new" element={<SignUpForm />} />
         <Route path="/create" element={<DeckForm />} />

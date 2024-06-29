@@ -11,9 +11,10 @@ import (
 )
 
 type Deck struct {
-	User_id int    `json:"user_id"`
-	Deck_id int    `json:"deck_id,omitempty"`
-	Title   string `json:"title"`
+	User_id  int    `json:"user_id"`
+	Username string `json:"username"`
+	Deck_id  int    `json:"deck_id,omitempty"`
+	Title    string `json:"title"`
 }
 
 type Notecard struct {
@@ -26,7 +27,7 @@ type Notecard struct {
 
 func (s *Server) getDeckListHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-		query := "SELECT users.user_id, decks.deck_id, decks.title FROM users JOIN decks ON users.user_id=decks.user_id"
+		query := "SELECT users.user_id, users.username, decks.deck_id, decks.title FROM users JOIN decks ON users.user_id=decks.user_id"
 		rows, err := s.dbpool.Query(context.Background(), query)
 		if err != nil {
 			fmt.Println("Error getting deck list query")
@@ -37,11 +38,12 @@ func (s *Server) getDeckListHandler() http.HandlerFunc {
 		var deck_id int
 		var deck_title string
 		var user_id int
+		var username string
 
 		decks := make([]Deck, 0)
-		pgx.ForEachRow(rows, []any{&user_id, &deck_id, &deck_title}, func() error {
+		pgx.ForEachRow(rows, []any{&user_id, &username, &deck_id, &deck_title}, func() error {
 			fmt.Println(deck_id, deck_title, user_id)
-			decks = append(decks, Deck{user_id, deck_id, deck_title})
+			decks = append(decks, Deck{user_id, username, deck_id, deck_title})
 			return nil
 		})
 
@@ -71,7 +73,7 @@ func (s *Server) getUserDeckListHandler() http.HandlerFunc {
 		decks := make([]Deck, 0)
 		pgx.ForEachRow(rows, []any{&user_id, &deck_id, &deck_title}, func() error {
 			fmt.Println(deck_id, deck_title, user_id)
-			decks = append(decks, Deck{user_id, deck_id, deck_title})
+			decks = append(decks, Deck{user_id, username, deck_id, deck_title})
 			return nil
 		})
 
@@ -83,11 +85,12 @@ func (s *Server) getUserDeckListHandler() http.HandlerFunc {
 
 func (s *Server) getDeckHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-
+		fmt.Println("in go get deck handler")
 		vars := mux.Vars(req)
-		deckId := vars["deckId"]
-		query := "SELECT cards.card_id, cards.front, cards.back, cards.user_id, cards.deck_id FROM decks JOIN cards ON decks.deck_id=cards.deck_id WHERE decks.deck_id=$1"
-		rows, err := s.dbpool.Query(context.Background(), query, deckId)
+		username := vars["username"]
+		deckTitle := vars["deckTitle"]
+		query := "SELECT cards.card_id, cards.front, cards.back, cards.user_id, cards.deck_id FROM decks JOIN users on users.user_id=decks.user_id JOIN cards ON decks.deck_id=cards.deck_id WHERE decks.title=$1 AND users.username=$2"
+		rows, err := s.dbpool.Query(context.Background(), query, deckTitle, username)
 		if err != nil {
 			fmt.Println("Error querying rows for cards in deck handler")
 			w.WriteHeader(http.StatusBadRequest)
