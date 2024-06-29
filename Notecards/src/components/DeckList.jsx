@@ -22,7 +22,7 @@ const DeckList = ({ username }) => {
   return (
     <ul>
       {decks.map((deck) => (
-        <li key={deck["deck_id"]}><Link to={"/notecards/" + deck["username"] + "/" + deck["deck_id"]}>{deck["title"]}</Link></li>
+        <li key={deck["deck_id"]}><Link to={"/notecards/" + deck["username"] + "/" + deck["title"]}>{deck["title"]}</Link></li>
       ))}
 
     </ul>

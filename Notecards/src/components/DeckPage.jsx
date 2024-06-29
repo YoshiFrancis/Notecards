@@ -4,24 +4,22 @@ import { getUserDeck } from "../utils/deck";
 import NotecardContainer from "./NotecardContainer";
 
 const DeckPage = () => {
-  const { username, deck_title } = useParams();
+  const { username, deckTitle } = useParams();
   const [notecards, setNotecards] = useState([]);
-  const [title, setTitle] = useState("");
   useEffect(() => {
     async function getCards()  {
-      let data = await getUserDeck(username, deck_title);
-      setNotecards(data["notecards"]);
-      setTitle(data["title"]);
+      let data = await getUserDeck(username, deckTitle);
+      setNotecards(data);
     }
     getCards();
   }, [])
 
   return (
     <div>
-      <h1>{title}</h1>
+      <h1>{deckTitle}</h1>
       <h3>By <Link to={"/notecards/" + username}>{username}</Link></h3>
       <div className="deckpage-notecard-container">
-        {<NotecardContainer notecards={notecards} />}
+        <NotecardContainer notecards={notecards} />
       </div>
     </div>
   )

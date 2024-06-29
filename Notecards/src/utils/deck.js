@@ -28,7 +28,6 @@ export const getUserDeck = async (username, deckTitle) => {
   const response = await fetch(url + "notecards/" + username + "/" + deckTitle);
   if (response.status == 200) {
     let data = await response.json();
-    console.log("data from getting user deck cards: ", data)
     return data;
   } else {
     console.error("error fetching deck from", username, "with id", deckTitle);
@@ -41,7 +40,8 @@ export const getUserDeck = async (username, deckTitle) => {
 }
 
 export const createDeck = async (title) => {
-  console.log
+  title.trim();
+  title = title.replace(" ", "-")
   const response = await fetch(url + "create", {
     method: 'POST',
     headers: {
