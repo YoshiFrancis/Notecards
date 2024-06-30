@@ -1,0 +1,8 @@
+
+.deckpage-notecard-container {
+  color: brown;
+  border: 2px white solid;
+  width: 80vw;
+  margin: 0 auto;
+  list-style: none;
+}

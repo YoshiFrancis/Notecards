@@ -1,15 +1,15 @@
-
+import '../styles/NotecardContainer.css'
 
 const NotecardContainer = ({notecards}) => {
   return (
-    <div className="notecard-container">
+    <ul className='notecard-list'>
       {notecards.map((notecard) => (
-        <li key={notecard.card_id}>
+        <li key={notecard.card_id} className='notecard-row-container'>
           <span className="back-text">{notecard.back}</span>
           <span className="front-text">{notecard.front}</span>
         </li>
       ))}
-    </div>
+    </ul>
   )
 }
 

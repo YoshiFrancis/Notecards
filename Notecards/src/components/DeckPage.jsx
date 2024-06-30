@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom"
 import { getUserDeck } from "../utils/deck";
 import NotecardContainer from "./NotecardContainer";
+import '../styles/DeckPage.css'
 
 const DeckPage = () => {
   const { username, deckTitle } = useParams();
