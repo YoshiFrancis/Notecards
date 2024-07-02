@@ -8,8 +8,8 @@ const NotecardSlide = () => {
   const [notecards, setNotecards] = useState([]);
   const [notecard, setNotecard] = useState({front : "", back : ""});
   const [notecardIdx, setNotecardIdx] = useState(0);
+  
   async function goNext() {
-    console.log(notecardIdx, notecards.length)
     if (notecardIdx == notecards.length) {
       let new_notecards =  await getUserDeck(username, deckTitle);
       setNotecards(new_notecards);

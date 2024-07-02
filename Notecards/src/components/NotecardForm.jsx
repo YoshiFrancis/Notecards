@@ -7,12 +7,7 @@ import { getUserId } from '../utils/user';
 const NotecardForm = () => {
   const { deckName } = useParams();
   const [searchParams] = useSearchParams();
-  let deckId = -1;
 
-  useEffect(() => {
-    deckId = parseInt(searchParams.get('deckId'));
-    console.log(deckId)
-  }, [])
   // State to store form data
   const [formData, setFormData] = useState({
     front: '',
@@ -32,7 +27,7 @@ const NotecardForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Process form data here (e.g., send to a server)
-    console.log('Form submitted:', formData);
+    const deckId = parseInt(searchParams.get('deckId'));
 
     const isSuccess = await createCards([{
       deck_id: deckId,
@@ -41,6 +36,8 @@ const NotecardForm = () => {
       user_id: getUserId(),
       card_id: -1
     }], deckName)
+
+    
 
     if (!isSuccess) {
       console.log("network error")

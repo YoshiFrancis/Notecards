@@ -41,7 +41,10 @@ export const getUserDeck = async (username, deckTitle) => {
 
 export const createDeck = async (title) => {
   title.trim();
-  title = title.replace(" ", "-")
+  title = title.replaceAll(" ", "-");
+  if (title.length <= 1) 
+      return [false, {}];
+    
   const response = await fetch(url + "create", {
     method: 'POST',
     headers: {
