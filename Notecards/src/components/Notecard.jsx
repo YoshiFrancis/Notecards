@@ -1,7 +1,7 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const Notecard = ({ front, back }) => {
-  [text, setText] = useState(front);
+  const [text, setText] = useState('');
   function flipCard() {
     if (text == front) {
       setText(back);
@@ -9,9 +9,13 @@ const Notecard = ({ front, back }) => {
       setText(front);
     }
   }
+  useEffect(() => {
+    setText(front);
+  }, [front])
   return (
     <div className="notecard">
       <h3>{text}</h3>
+      <p>Text: {text}</p>
       <button className="notecard-flip-button" onClick={flipCard}>Flip</button>
     </div>
   )

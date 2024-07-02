@@ -19,6 +19,7 @@ const DeckPage = () => {
     <div>
       <h1>{deckTitle}</h1>
       <h3>By <Link to={"/notecards/" + username}>{username}</Link></h3>
+      <h4><Link to={"/notecards/" + username + "/" + deckTitle + "/practice"}>Practice Notecards</Link></h4>
       <div className="deckpage-notecard-container">
         <NotecardContainer notecards={notecards} />
       </div>
