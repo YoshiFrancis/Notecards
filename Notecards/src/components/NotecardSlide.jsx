@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { getUserDeck } from "../utils/deck";
 import Notecard from "./Notecard";
 import { useParams } from "react-router-dom";
+import '../styles/NotecardSlide.css'
 
-const NotecardSlide = () => {
-  const { username, deckTitle } = useParams();
+const NotecardSlide = ({ username, deckTitle }) => {
   const [notecards, setNotecards] = useState([]);
   const [notecard, setNotecard] = useState({front : "", back : ""});
   const [notecardIdx, setNotecardIdx] = useState(0);
@@ -22,13 +22,13 @@ const NotecardSlide = () => {
   }
 
   useEffect(() => {
-    goNext;
+    goNext();
   }, [])
 
   return (
-    <div>
+    <div className="notecard-container">
       <Notecard front={notecard.front} back={notecard.back} />
-      <button onClick={goNext}>NEXT</button>
+      <button id="next-button" onClick={goNext}>NEXT</button>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-
+import '../styles/Notecard.css'
 const Notecard = ({ front, back }) => {
   const [text, setText] = useState('');
   function flipCard() {
@@ -14,8 +14,9 @@ const Notecard = ({ front, back }) => {
   }, [front])
   return (
     <div className="notecard">
-      <h3>{text}</h3>
-      <p>Text: {text}</p>
+      <div className="notecard-text">
+        <p>{text}</p>
+      </div>
       <button className="notecard-flip-button" onClick={flipCard}>Flip</button>
     </div>
   )

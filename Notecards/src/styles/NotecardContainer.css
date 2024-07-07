@@ -32,4 +32,5 @@
 .front-text {
   color: yellow;
   float: right;
+  text-wrap: wrap;
 }

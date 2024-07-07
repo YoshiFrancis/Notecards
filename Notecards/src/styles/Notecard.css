@@ -1,0 +1,35 @@
+.notecard {
+  width: 80%;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  white-space: wrap;
+
+}
+
+.notecard button {
+  margin-top: auto;
+  margin-bottom: 0;
+  width: 100%;
+  height: 10%;
+  align-self: flex-end;
+  bottom: 0;
+
+}
+
+.notecard-text {
+  width: 100%; /* Set your desired width */
+  height: 90%; /* Set your desired height */
+  padding: 10px; /* Optional: for some inner padding */
+  overflow-y:scroll; /* Enables vertical scrolling */
+  overflow-x: hidden;
+  font-size: 2em;
+  padding: 3px;
+}
+
+.notecard-text p {
+  color: blue;
+  padding: 20px;;
+  text-wrap: wrap;
+}

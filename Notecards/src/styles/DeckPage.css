@@ -1,7 +1,17 @@
+.deckpage {
+  border: 5px white solid;
+}
 
 .deckpage-notecard-container {
   color: brown;
   width: 80vw;
   margin: 0 auto;
   list-style: none;
+}
+
+.deckpage-notecard-slide-container {
+  border: 5px orange solid;
+  margin: 0 auto;
+  width: 50vw;
+  height: 45vh;
 }
