@@ -18,15 +18,16 @@ export const createCards = async (cards) => {
 }
 
 export const updateCards = async (cards) => {
+  console.log(cards)
   const response = await fetch(url + "update-cards", {
-    method: 'PUT',
+    method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(cards)
   })
 
-  if (response.status == 201) {
+  if (response.status == 202) {
     return true;
   } else {
     return false;

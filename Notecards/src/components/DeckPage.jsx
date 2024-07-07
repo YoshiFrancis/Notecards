@@ -20,6 +20,7 @@ const DeckPage = () => {
     <div className="deckpage">
       <h1>{deckTitle}</h1>
       <h3>By <Link to={"/notecards/" + username}>{username}</Link></h3>
+      <h3><Link to="/create-cards">Create Cards</Link></h3>
       {/* <h4><Link to={"/notecards/" + username + "/" + deckTitle + "/edit"}>Edit Deck</Link></h4> */}
       <div className="deckpage-notecard-slide-container">
         <NotecardSlide username={username} deckTitle={deckTitle} />

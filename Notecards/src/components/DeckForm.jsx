@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import "../styles/DeckForm.css"
 import { Navigate, redirect, useNavigate } from 'react-router-dom';
 import { createDeck } from "../utils/deck.js"
+import { getUsername } from '../utils/user.js';
 
 const DeckForm = () => {
   // State to store form data
@@ -25,8 +26,8 @@ const DeckForm = () => {
     e.preventDefault();
     // Process form data here (e.g., send to a server)
     const response = await createDeck(formData.name)
-    if (response[0]) 
-      navigate(`/create/${formData.name}?deckId=${response[1]}`)
+    if (response[0] && getUsername() != "") 
+      navigate(`/notecards/${getUsername()}/create/${formData.name}`)
     else 
       console.error("network errors!")
 

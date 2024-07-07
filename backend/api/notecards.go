@@ -235,6 +235,7 @@ func (s *Server) deleteCardsHandler() http.HandlerFunc {
 
 func (s *Server) updateCardsHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
+		fmt.Println("in update cards handler")
 		decoder := json.NewDecoder(req.Body)
 		var notecards []Notecard
 		if err := decoder.Decode(&notecards); err != nil {

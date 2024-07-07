@@ -1,6 +1,5 @@
 const url = 'http://localhost:4221/'
 
-
 export const newLogin = async (username_, password_) => {
   const response = await fetch(url + "login/new/", {
     method: 'POST',

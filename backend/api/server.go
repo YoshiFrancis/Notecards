@@ -54,7 +54,7 @@ func (s *Server) routes() {
 	s.HandleFunc("/delete-deck", s.deleteDecksHandler()).Methods("DELETE")
 	s.HandleFunc("/delete-card", s.deleteCardsHandler()).Methods("DELETE")
 
-	s.HandleFunc("/update-cards", s.updateCardsHandler()).Methods("PUT")
+	s.HandleFunc("/update-cards", s.updateCardsHandler()).Methods("POST")
 
 	s.HandleFunc("/create-card", s.postCardsHandler()).Methods("POST")
 	s.HandleFunc("/create-deck", s.postDeckHandler()).Methods("POST")

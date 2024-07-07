@@ -21,13 +21,16 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/notecards" element={<DeckList username={""}/>} />
+        
         <Route path="/notecards/:username" element={<DeckListWrapper />} />
         <Route path="/notecards/:username/:deckTitle" element={<DeckPage />} />
-        {/* <Route path="/notecards/:username/:deckTitle/practice" element={<NotecardSlide />} /> */}
+
+        <Route path="/notecards/:username/create" element={<DeckForm />} />
+        <Route path="/notecards/:username/create/:deckName" element={<NotecardForm />} />
+
         <Route path="/login" element={<LoginForm />} />
-        <Route path="login/new" element={<SignUpForm />} />
-        <Route path="/create" element={<DeckForm />} />
-        <Route path="/create/:deckName" element={<NotecardForm />} />
+        <Route path="/login/new" element={<SignUpForm />} />
+        
       </Routes>
     </>
     

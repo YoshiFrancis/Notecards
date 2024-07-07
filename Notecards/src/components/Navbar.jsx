@@ -12,7 +12,7 @@ const Navbar = () => {
           <li><Link to='/notecards'>Notecards</Link></li>
           {getUsername() == "" && <li><Link to='/login'>Login</Link></li>}
           {getUsername() == "" && <li><Link to='/login/new'>Sign Up</Link></li>}
-          {getUsername() && <li><Link to='/create'>Create</Link></li>}
+          {getUsername() && <li><Link to={`/notecards/${getUsername()}/create`}>Create</Link></li>}
           {getUsername() && <li><Link to='/'>Sign Out</Link></li>}
         </ul>
       </nav>
