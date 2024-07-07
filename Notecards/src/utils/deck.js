@@ -30,6 +30,7 @@ export const getUserDeck = async (username, deckTitle) => {
     let data = await response.json();
     return data;
   } else {
+    console.log("ERROR geting user deck")
     console.error("error fetching deck from", username, "with id", deckTitle);
     return {
       username: "",

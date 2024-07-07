@@ -27,7 +27,7 @@ const DeckForm = () => {
     // Process form data here (e.g., send to a server)
     const response = await createDeck(formData.name)
     if (response[0] && getUsername() != "") 
-      navigate(`/notecards/${getUsername()}/create/${formData.name}`)
+      navigate(`/notecards/${getUsername()}/create/${formData.name}?deckId=${response[1]}`)
     else 
       console.error("network errors!")
 

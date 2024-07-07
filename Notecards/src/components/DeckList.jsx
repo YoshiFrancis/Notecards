@@ -25,7 +25,7 @@ const DeckList = ({ username }) => {
     <ul className="decklist">
       {decks.map((deck) => (
         <li key={deck["deck_id"]}>
-          <Link to={"/notecards/" + deck["username"] + "/" + deck["title"]}>
+          <Link to={"/notecards/" + deck["username"] + "/" + deck["title"] + "?deckId=" + deck["deck_id"] }>
             <DeckDescription username={deck["username"]} title={deck["title"]} className="deck-desc-holder"/>
           </Link>
         </li>

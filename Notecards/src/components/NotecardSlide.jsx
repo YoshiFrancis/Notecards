@@ -6,7 +6,7 @@ import '../styles/NotecardSlide.css'
 
 const NotecardSlide = ({ username, deckTitle }) => {
   const [notecards, setNotecards] = useState([]);
-  const [notecard, setNotecard] = useState({front : "", back : ""});
+  const [notecard, setNotecard] = useState(null);
   const [notecardIdx, setNotecardIdx] = useState(0);
   
   async function goNext() {
@@ -27,7 +27,7 @@ const NotecardSlide = ({ username, deckTitle }) => {
 
   return (
     <div className="notecard-container">
-      <Notecard front={notecard.front} back={notecard.back} />
+      {notecard && <Notecard front={notecard.front} back={notecard.back} /> }
       <button id="next-button" onClick={goNext}>NEXT</button>
     </div>
   )
