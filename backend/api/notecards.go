@@ -232,3 +232,26 @@ func (s *Server) deleteCardsHandler() http.HandlerFunc {
 		w.WriteHeader(http.StatusOK)
 	}
 }
+
+func (s *Server) updateCardsHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		decoder := json.NewDecoder(req.Body)
+		var notecards []Notecard
+		if err := decoder.Decode(&notecards); err != nil {
+			fmt.Println("Error json decoding in update cards handler")
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+
+		for _, notecard := range notecards {
+			_, err := s.dbpool.Exec(context.Background(), "UPDATE cards SET front=$1, back=$2 WHERE deck_id=$3 AND user_id=$4 AND card_id=$5", notecard.Front, notecard.Back, notecard.DeckId, notecard.UserId, notecard.CardId)
+			if err != nil {
+				fmt.Println("Error updating notecard")
+				w.WriteHeader(http.StatusBadRequest)
+				return
+			}
+		}
+
+		w.WriteHeader(http.StatusAccepted)
+	}
+}
