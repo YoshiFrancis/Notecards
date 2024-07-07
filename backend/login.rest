@@ -74,7 +74,118 @@ Content-Type: "application/json"
 
 ####
 
-GET http://localhost:4221/YoshiKnows/notecards
+GET http://localhost:4221/notecards/YoshiKnows
 
 ####
 GET http://localhost:4221/notecards/YoshiKnows/New%20town%20my%20town!
+
+####
+DELETE http://localhost:4221/notecards/YoshiKnows/ho/edit
+Content-Type: 'application/json'
+
+[
+  {
+    "deck_id": 2,
+    "front": "Yoshi is King",
+    "back": "Yoshi is back King",
+    "user_id": 4,
+    "card_id": 18
+  },
+  {
+    "deck_id": 2,
+    "front": "Yoshi is The King",
+    "back": "Yoshi is My King",
+    "user_id": 4,
+    "card_id": 19
+  },
+  {
+    "deck_id": 2,
+    "front": "Yoshi our King",
+    "back": "Yoshi is Our King",
+    "user_id": 4,
+    "card_id": 20
+  },
+  {
+    "deck_id": 2,
+    "front": "Yoshi is You",
+    "back": "Yoshi Our King",
+    "user_id": 4,
+    "card_id": 21
+  },
+  {
+    "deck_id": 2,
+    "front": "Yoshi is ",
+    "back": "Yoshi is ur King",
+    "user_id": 4,
+    "card_id": 22
+  },
+  {
+    "deck_id": 2,
+    "front": "YWOWOOWOWOWOWO",
+    "back": "Yoshi is back King",
+    "user_id": 4,
+    "card_id": 23
+  },
+  {
+    "deck_id": 2,
+    "front": "Yoshi is The King",
+    "back": "Yoshi is My King",
+    "user_id": 4,
+    "card_id": 24
+  },
+  {
+    "deck_id": 2,
+    "front": "Yoshi our King",
+    "back": "Yoshi is Our King",
+    "user_id": 4,
+    "card_id": 25
+  },
+  {
+    "deck_id": 2,
+    "front": "Yoshi is You",
+    "back": "Yoshi Our King",
+    "user_id": 4,
+    "card_id": 26
+  },
+  {
+    "deck_id": 2,
+    "front": "Yoshi is ",
+    "back": "Yoshi is ur King",
+    "user_id": 4,
+    "card_id": 27
+  },
+  {
+    "deck_id": 2,
+    "front": "Yoshi is The King",
+    "back": "Yoshi is My King",
+    "user_id": 4,
+    "card_id": 29
+  },
+  {
+    "deck_id": 2,
+    "front": "Yoshi is You",
+    "back": "Yoshi Our King",
+    "user_id": 4,
+    "card_id": 31
+  },
+  {
+    "deck_id": 2,
+    "front": "Yoshi is ",
+    "back": "Yoshi is ur King",
+    "user_id": 4,
+    "card_id": 32
+  }
+]
+
+####
+DELETE http://localhost:4221/create/New%20town%20my%20town!/
+Content-Type: 'application/json'
+
+[
+  {
+    "user_id": 4,
+    "username": "YoshiKnows",
+    "deck_id": 2,
+    "title": "New town my town!"
+  }
+]

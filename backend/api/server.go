@@ -49,11 +49,11 @@ func (s *Server) Close() {
 func (s *Server) routes() {
 	s.HandleFunc("/create", s.postDeckHandler()).Methods("POST")
 	s.HandleFunc("/create/{deckName}", s.postCardsHandler()).Methods("POST")
-	s.HandleFunc("/create/{deckName}/", s.deleteDeckHandler()).Methods("DELETE")
-	s.HandleFunc("/create/{deckName}/{cardId}/", s.deleteCardHandler()).Methods("DELETE")
+	s.HandleFunc("/create/{deckName}/", s.deleteDecksHandler()).Methods("DELETE")
 	s.HandleFunc("/notecards", s.getDeckListHandler()).Methods("GET")
 	s.HandleFunc("/notecards/{username}", s.getUserDeckListHandler()).Methods("GET")
 	s.HandleFunc("/notecards/{username}/{deckTitle}", s.getDeckHandler()).Methods("GET")
+	s.HandleFunc("/notecards/{username}/{decktitle}/edit", s.deleteCardsHandler()).Methods("DELETE")
 
 	s.HandleFunc("/login", s.postLoginHandler()).Methods("POST")
 	s.HandleFunc("/login/new/", s.postNewLoginHandler()).Methods("POST")

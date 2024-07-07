@@ -186,14 +186,49 @@ func (s *Server) postCardsHandler() http.HandlerFunc {
 	}
 }
 
-func (s *Server) deleteDeckHandler() http.HandlerFunc {
+func (s *Server) deleteDecksHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-
+		fmt.Println("in delete decks handler")
+		decoder := json.NewDecoder(req.Body)
+		var decks []Deck
+		if err := decoder.Decode(&decks); err != nil {
+			fmt.Println("Error decoding json: delete deck handler")
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+		for _, deck := range decks {
+			fmt.Println(deck.Deck_id, deck.Title, deck.User_id)
+			_, err := s.dbpool.Exec(context.Background(), "DELETE from decks WHERE deck_id=$1 AND title=$2 AND user_id=$3", deck.Deck_id, deck.Title, deck.User_id)
+			if err != nil {
+				fmt.Println("Error deleting from decks table")
+				w.WriteHeader(http.StatusBadRequest)
+				return
+			}
+		}
+		w.WriteHeader(http.StatusOK)
 	}
 }
 
-func (s *Server) deleteCardHandler() http.HandlerFunc {
+func (s *Server) deleteCardsHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
+		fmt.Println("In delete!")
+		decoder := json.NewDecoder(req.Body)
+		var notecards []Notecard
+		if err := decoder.Decode(&notecards); err != nil {
+			fmt.Println("Error decoding json: delete notecard handler")
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
 
+		for _, notecard := range notecards {
+			_, err := s.dbpool.Exec(context.Background(), "DELETE from cards WHERE deck_id=$1 AND user_id=$2 AND card_id=$3", notecard.DeckId, notecard.UserId, notecard.CardId)
+			if err != nil {
+				fmt.Println("Error deleting from cards table")
+				w.WriteHeader(http.StatusBadRequest)
+				return
+			}
+		}
+
+		w.WriteHeader(http.StatusOK)
 	}
 }
