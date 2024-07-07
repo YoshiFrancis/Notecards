@@ -3,7 +3,7 @@ import { getUserId, getUsername } from "./user";
 const url = 'http://localhost:4221/'
 
 export const getAllDecks = async () => {
-  const response = await fetch(url + "notecards")
+  const response = await fetch(url + "decks")
   if (response.status == 200) {
     let decks = response.json();
     return decks;
@@ -14,7 +14,7 @@ export const getAllDecks = async () => {
 }
 
 export const getAllUserDecks = async (username) => {
-  const response = await fetch(url + "notecards/" + username);
+  const response = await fetch(url + "decks/" + username);
   if (response.status == 200) {
     let decks = await response.json();
     return decks;
@@ -39,13 +39,13 @@ export const getUserDeck = async (username, deckTitle) => {
   }
 }
 
-export const createDeck = async (title) => {
+export const createDeck = async (title, username) => {
   title.trim();
   title = title.replaceAll(" ", "-");
   if (title.length <= 1) 
       return [false, {}];
     
-  const response = await fetch(url + "create", {
+  const response = await fetch(url + "create-deck", {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -63,4 +63,19 @@ export const createDeck = async (title) => {
   } else {
     return [false, {}];
   }
+}
+
+export const deleteDecks = async(decks) => {
+  const response = await fetch(url + "delete-deck", {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(decks)
+  })
+
+  if (response.status == 200)
+    return true;
+  else 
+    return false;
 }

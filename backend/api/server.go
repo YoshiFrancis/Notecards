@@ -47,14 +47,17 @@ func (s *Server) Close() {
 }
 
 func (s *Server) routes() {
-	s.HandleFunc("/create", s.postDeckHandler()).Methods("POST")
-	s.HandleFunc("/create/{deckName}", s.postCardsHandler()).Methods("POST")
-	s.HandleFunc("/notecards", s.getDeckListHandler()).Methods("GET")
-	s.HandleFunc("/notecards/{username}", s.getUserDeckListHandler()).Methods("GET")
+	s.HandleFunc("/decks", s.getDeckListHandler()).Methods("GET")
+	s.HandleFunc("/decks/{username}", s.getUserDeckListHandler()).Methods("GET")
 	s.HandleFunc("/notecards/{username}/{deckTitle}", s.getDeckHandler()).Methods("GET")
-	s.HandleFunc("/notecards/{username}/{deckTitle}", s.deleteDecksHandler()).Methods("DELETE")
-	s.HandleFunc("/notecards/{username}/{deckTitle}/edit", s.deleteCardsHandler()).Methods("DELETE")
-	s.HandleFunc("/notecards/{username}/{deckTitle}/edit", s.updateCardsHandler()).Methods("PUT")
+
+	s.HandleFunc("/delete-deck", s.deleteDecksHandler()).Methods("DELETE")
+	s.HandleFunc("/delete-card", s.deleteCardsHandler()).Methods("DELETE")
+
+	s.HandleFunc("/update-cards", s.updateCardsHandler()).Methods("PUT")
+
+	s.HandleFunc("/create-card", s.postCardsHandler()).Methods("POST")
+	s.HandleFunc("/create-deck", s.postDeckHandler()).Methods("POST")
 
 	s.HandleFunc("/login", s.postLoginHandler()).Methods("POST")
 	s.HandleFunc("/login/new/", s.postNewLoginHandler()).Methods("POST")
