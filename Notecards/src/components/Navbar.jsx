@@ -13,7 +13,7 @@ const Navbar = () => {
           {getUsername() == "" && <li><Link to='/login'>Login</Link></li>}
           {getUsername() == "" && <li><Link to='/login/new'>Sign Up</Link></li>}
           {getUsername() && <li><Link to={`/notecards/${getUsername()}/create`}>Create</Link></li>}
-          {getUsername() && <li><Link to='/'>Sign Out</Link></li>}
+          {getUsername() && <li><Link to='/logoff'>Sign Out</Link></li>}
         </ul>
       </nav>
     </>

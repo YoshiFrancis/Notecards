@@ -43,7 +43,6 @@ func (s *Server) getDeckListHandler() http.HandlerFunc {
 
 		decks := make([]Deck, 0)
 		pgx.ForEachRow(rows, []any{&user_id, &username, &deck_id, &deck_title}, func() error {
-			fmt.Println(deck_id, deck_title, user_id)
 			decks = append(decks, Deck{user_id, username, deck_id, deck_title})
 			return nil
 		})
@@ -73,7 +72,6 @@ func (s *Server) getUserDeckListHandler() http.HandlerFunc {
 
 		decks := make([]Deck, 0)
 		pgx.ForEachRow(rows, []any{&user_id, &deck_id, &deck_title}, func() error {
-			fmt.Println(deck_id, deck_title, user_id)
 			decks = append(decks, Deck{user_id, username, deck_id, deck_title})
 			return nil
 		})
@@ -86,7 +84,6 @@ func (s *Server) getUserDeckListHandler() http.HandlerFunc {
 
 func (s *Server) getDeckHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
-		fmt.Println("in go get deck handler")
 		vars := mux.Vars(req)
 		username := vars["username"]
 		deckTitle := vars["deckTitle"]
@@ -203,6 +200,11 @@ func (s *Server) deleteDecksHandler() http.HandlerFunc {
 		}
 		for _, deck := range decks {
 			fmt.Println(deck.Deck_id, deck.Title, deck.User_id)
+			if deck.User_id == 0 {
+				fmt.Println("Must be logged in!")
+				w.WriteHeader(http.StatusBadRequest)
+				return
+			}
 			_, err := s.dbpool.Exec(context.Background(), "DELETE from decks WHERE deck_id=$1 AND title=$2 AND user_id=$3", deck.Deck_id, deck.Title, deck.User_id)
 			if err != nil {
 				fmt.Println("Error deleting from decks table")

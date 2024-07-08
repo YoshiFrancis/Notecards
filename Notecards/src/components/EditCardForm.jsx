@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { deleteCards, updateCards } from "../utils/notecard";
 
-const EditCardForm = ({ notecard, stopEditing }) => {
+const EditCardForm = ({ notecard, stopEditing, setEditedFlag }) => {
   const [front, setFront] = useState(notecard.front);
   const [back, setBack] = useState(notecard.back);
 
@@ -14,6 +14,7 @@ const EditCardForm = ({ notecard, stopEditing }) => {
     }]);
 
     stopEditing();
+    setEditedFlag();
   }
   
   const deleteCard = async (e) => {

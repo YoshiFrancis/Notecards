@@ -39,9 +39,17 @@ export const login = async (username_, password_) => {
   }
 }
 
+export const logoff = () => {
+  document.cookie.split(';').forEach(cookie => {
+    const eqPos = cookie.indexOf('=');
+    const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
+  });
+}
+
 export const getUsername = () => {
   let decodedCookie = decodeURIComponent(document.cookie);
-  return decodedCookie.substring("username=".length)
+  return decodedCookie.substring("username=".length, decodedCookie.indexOf("; user_id="));
 }
 
 export const getUserId = () => {

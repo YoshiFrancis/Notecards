@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../styles/NotecardContainer.css'
 import EditCardForm from './EditCardForm';
 
-const NotecardContainer = ({notecards}) => {
+const NotecardContainer = ({notecards, setEditedFlag}) => {
   const [editFlag, setEditFlag] = useState(false);
   const [currNotecard, setCurrNotecard] = useState({});
 
@@ -24,7 +24,7 @@ const NotecardContainer = ({notecards}) => {
             <span className="back-text">{notecard.back}</span>
             <span className="front-text">{notecard.front}</span>
             <button onClick={() => editCard(notecard)}>Edit</button>
-            {editFlag && <EditCardForm notecard={currNotecard} stopEditing={stopEditing}/>}
+            {editFlag && <EditCardForm notecard={currNotecard} stopEditing={stopEditing} setEditedFlag={setEditedFlag}/>}
           </li>
         ))}
       </ul>

@@ -11,6 +11,8 @@ import DeckList from './components/DeckList';
 import DeckPage from './components/DeckPage';
 import DeckListWrapper from './components/DeckListWrapper';
 import NotecardSlide from './components/NotecardSlide';
+import Notes from './components/Notes';
+import SignOutForm from './components/SignOut';
 
 function App() {
 
@@ -24,12 +26,14 @@ function App() {
         
         <Route path="/notecards/:username" element={<DeckListWrapper />} />
         <Route path="/notecards/:username/:deckTitle" element={<DeckPage />} />
+        <Route path="/notecards/:username/:deckTitle/notes" element={<Notes />} />
 
         <Route path="/notecards/:username/create" element={<DeckForm />} />
         <Route path="/notecards/:username/create/:deckName" element={<NotecardForm />} />
 
         <Route path="/login" element={<LoginForm />} />
         <Route path="/login/new" element={<SignUpForm />} />
+        <Route path="/logoff" element={<SignOutForm />} />
         
       </Routes>
     </>
