@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"sort"
 
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v5"
@@ -102,6 +103,10 @@ func (s *Server) getDeckHandler() http.HandlerFunc {
 		pgx.ForEachRow(rows, []any{&card_id, &front, &back, &user_id, &deck_id}, func() error {
 			cards = append(cards, Notecard{deck_id, front, back, user_id, card_id})
 			return nil
+		})
+
+		sort.Slice(cards, func(i, j int) bool {
+			return cards[i].CardId < cards[j].CardId
 		})
 
 		cardsJson, _ := json.Marshal(cards)

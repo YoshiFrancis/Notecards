@@ -20,7 +20,7 @@ export const createCards = async (cards) => {
 export const updateCards = async (cards) => {
   console.log(cards)
   const response = await fetch(url + "update-cards", {
-    method: 'POST',
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },

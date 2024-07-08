@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { updateCards } from "../utils/notecard";
+import { deleteCards, updateCards } from "../utils/notecard";
 
 const EditCardForm = ({ notecard, stopEditing }) => {
   const [front, setFront] = useState(notecard.front);
@@ -15,10 +15,22 @@ const EditCardForm = ({ notecard, stopEditing }) => {
 
     stopEditing();
   }
+  
+  const deleteCard = async (e) => {
+    await deleteCards([notecard]);
+    stopEditing();
+  }
+
+  const cancel = async (e) => {
+    e.preventDefault();
+    stopEditing();
+  }
 
   return (
     <>
       <h1>Edit form</h1>
+      <button onClick={cancel}>Cancel</button>
+      <button onClick={deleteCard}>Delete</button>
       <form onSubmit={update}>
         <div>
           <label>

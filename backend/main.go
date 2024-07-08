@@ -15,7 +15,12 @@ func main() {
 	s := api.NewServer()
 	defer s.Close()
 
-	handler := cors.Default().Handler(s)
+	c := cors.New(cors.Options{
+		AllowedOrigins: []string{"*"},
+		AllowedMethods: []string{http.MethodGet, http.MethodPost, http.MethodDelete, http.MethodPut},
+	})
+
+	handler := c.Handler(s)
 
 	log.Fatal(http.ListenAndServe(":4221", handler))
 
