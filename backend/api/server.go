@@ -50,11 +50,13 @@ func (s *Server) routes() {
 	s.HandleFunc("/decks", s.getDeckListHandler()).Methods("GET")
 	s.HandleFunc("/decks/{username}", s.getUserDeckListHandler()).Methods("GET")
 	s.HandleFunc("/notecards/{username}/{deckTitle}", s.getDeckHandler()).Methods("GET")
+	s.HandleFunc("/notes/{username}/{deckTitle}", s.getNotesHandler()).Methods("GET")
 
 	s.HandleFunc("/delete-deck", s.deleteDecksHandler()).Methods("DELETE")
 	s.HandleFunc("/delete-card", s.deleteCardsHandler()).Methods("DELETE")
 
 	s.HandleFunc("/update-cards", s.updateCardsHandler()).Methods("PUT")
+	s.HandleFunc("/update-notes", s.updateNotesHandler()).Methods("PUT")
 
 	s.HandleFunc("/create-card", s.postCardsHandler()).Methods("POST")
 	s.HandleFunc("/create-deck", s.postDeckHandler()).Methods("POST")
