@@ -52,7 +52,7 @@ const DeckPage = () => {
     <div className="deckpage">
       <h1>{deckTitle}</h1>
       <h3>By <Link to={"/notecards/" + username}>{username}</Link></h3>
-      <h3><Link to={`/notecards/${username}/${deckTitle}/notes`}>Notes</Link></h3>
+      <h3><Link to={`/notecards/${username}/${deckTitle}/notes?deckId=${searchParams.get('deckId')}`}>Notes</Link></h3>
       <h3><button onClick={deleteDeck}>Delete Deck</button></h3>
       <h3><Link to={`/notecards/${username}/create/${deckTitle}?deckId=${searchParams.get('deckId')}`}>Create Cards</Link></h3>
       <div className="deckpage-notecard-slide-container">

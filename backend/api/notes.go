@@ -18,17 +18,16 @@ type Note struct {
 func (s *Server) getNotesHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		vars := mux.Vars(req)
-		username := vars["username"]
-		deckTitle := vars["deckTitle"]
+		user_id := vars["userId"]
+		deckId := vars["deckId"]
 
 		var note Note
-		err := s.dbpool.QueryRow(context.Background(), "SELECT users.user_id, notes.deck_id, notes.text FROM users JOIN notes JOIN decks WHERE users.username=$1 AND decks.title=$2", username, deckTitle).Scan(&note.User_id, &note.Deck_id, &note.Text)
+		err := s.dbpool.QueryRow(context.Background(), "SELECT notes.user_id, notes.deck_id, notes.text FROM notes WHERE notes.user_id=$1 AND notes.deck_id=$2", user_id, deckId).Scan(&note.User_id, &note.Deck_id, &note.Text)
 		if err != nil {
 			fmt.Println("Error querying for the notes!")
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
-
 		w.WriteHeader(http.StatusFound)
 		jsonNote, _ := json.Marshal(note)
 		w.Write(jsonNote)
@@ -46,7 +45,8 @@ func (s *Server) updateNotesHandler() http.HandlerFunc {
 			return
 		}
 
-		_, err := s.dbpool.Exec(context.Background(), "UPDATE notes SET notes.text=$1 FROM notes WHERE notes.user_id=$2 AND notes.deck_id=$23", note.Text, note.User_id, note.Deck_id)
+		_, err := s.dbpool.Exec(context.Background(), "UPDATE notes SET text=$1 WHERE user_id=$2 AND deck_id=$3", note.Text, note.User_id, note.Deck_id)
+
 		if err != nil {
 			fmt.Println("Error updating notes!")
 			w.WriteHeader(http.StatusBadRequest)

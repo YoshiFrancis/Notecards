@@ -140,17 +140,24 @@ func (s *Server) postDeckHandler() http.HandlerFunc {
 
 		// Inserting new deck into decks
 		_, err = s.dbpool.Exec(context.Background(), "INSERT INTO decks (title, user_id) VALUES ($1, $2)", deckReq.Title, deckReq.User_id)
+
 		if err != nil {
 			fmt.Println("Error inserting : post deck handler")
 			w.WriteHeader(http.StatusExpectationFailed)
-		} else {
-			w.WriteHeader(http.StatusCreated)
+			return
 		}
 
 		var deck_id int
 		err = s.dbpool.QueryRow(context.Background(), "SELECT deck_id FROM decks WHERE title=$1 AND user_id=$2", deckReq.Title, deckReq.User_id).Scan(&deck_id)
 		if err != nil {
 			fmt.Println("Error querying for deck_id: post deck handler")
+			w.WriteHeader(http.StatusExpectationFailed)
+			return
+		}
+		// Also inserting a note row into notes
+		_, err = s.dbpool.Exec(context.Background(), "INSERT INTO notes (user_id, deck_id, text) VALUES ($1, $2, $3)", deckReq.User_id, deck_id, "")
+		if err != nil {
+			fmt.Println("Error inserting notes: post deck handler")
 			w.WriteHeader(http.StatusExpectationFailed)
 			return
 		}
